@@ -106,7 +106,9 @@ int main(void)
   ADCPollingMethodInit();
   GPIO_PinState SwitchState[2];
   float Vsense;
-  int V25 = 760
+  int V25 = 0;
+  int Avg_Slope = 0;
+  float Temperature;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -138,7 +140,11 @@ int main(void)
 
 	  else
 	  {
-
+		  Vsense = ADCChannel[1].data;
+		  V25 = 760;
+		  Avg_Slope = 2500;
+		  Temperature = ((Vsense-V25)/Avg_Slope)+25;
+		  ADCOutputConverted = Temperature;
 	  }
   }
   /* USER CODE END 3 */

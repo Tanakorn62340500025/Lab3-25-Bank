@@ -124,11 +124,11 @@ int main(void)
 	  {
 		  if(ADCMode == 0)
 		  {
-			  ADCMode == 1;
+			  ADCMode = 1;
 		  }
 		  else
 		  {
-			  ADCMode == 0;
+			  ADCMode = 0;
 		  }
 	  }
 	  SwitchState[1] = SwitchState[0];

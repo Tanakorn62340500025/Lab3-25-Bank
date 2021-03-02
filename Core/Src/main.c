@@ -105,6 +105,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   ADCPollingMethodInit();
   GPIO_PinState SwitchState[2];
+  float Vsense;
+  int V25 = 760
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -128,6 +130,16 @@ int main(void)
 		  }
 	  }
 	  SwitchState[1] = SwitchState[0];
+
+	  if(ADCMode == 0)
+	  {
+		  ADCOutputConverted = ADCChannel[0].data;
+	  }
+
+	  else
+	  {
+
+	  }
   }
   /* USER CODE END 3 */
 }

@@ -118,7 +118,14 @@ int main(void)
 	  SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6);
 	  if(SwitchState[1] == GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET)
 	  {
-
+		  if(ADCMode == 0)
+		  {
+			  ADCMode == 1;
+		  }
+		  else
+		  {
+			  ADCMode == 0;
+		  }
 	  }
 	  SwitchState[1] = SwitchState[0];
   }

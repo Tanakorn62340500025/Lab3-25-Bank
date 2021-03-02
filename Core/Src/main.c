@@ -46,7 +46,8 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 uint16_t adcdata[2] = { 0 };
-
+int ADCMode = 0;
+float ADCOutputConverted;
 typedef struct {
 	ADC_ChannelConfTypeDef Config;
 	uint16_t data;
@@ -103,6 +104,7 @@ int main(void)
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
   ADCPollingMethodInit();
+  GPIO_PinState SwitchState[2];
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -113,6 +115,12 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  ADCPollingMethodUpdate();
+	  SwitchState[0] = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_6);
+	  if(SwitchState[1] == GPIO_PIN_SET && SwitchState[0] == GPIO_PIN_RESET)
+	  {
+
+	  }
+	  SwitchState[1] = SwitchState[0];
   }
   /* USER CODE END 3 */
 }

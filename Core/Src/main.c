@@ -48,6 +48,8 @@ UART_HandleTypeDef huart2;
 uint16_t adcdata[2] = { 0 };
 int ADCMode = 0;
 float ADCOutputConverted;
+float change;
+float change1;
 typedef struct {
 	ADC_ChannelConfTypeDef Config;
 	uint16_t data;
@@ -107,7 +109,7 @@ int main(void)
   GPIO_PinState SwitchState[2];
   float Vsense;
   int V25 = 0;
-  int Avg_Slope = 0;
+  float Avg_Slope = 0;
   float Temperature;
   /* USER CODE END 2 */
 
@@ -135,14 +137,16 @@ int main(void)
 
 	  if(ADCMode == 0)
 	  {
-		  ADCOutputConverted = ADCChannel[0].data;
+		  change = ADCChannel[0].data;
+		  ADCOutputConverted = (change*(3300.0/4096.0));
 	  }
 
 	  else
 	  {
-		  Vsense = ADCChannel[1].data;
+		  change1 = ADCChannel[1].data;
+		  Vsense = (change1*(3300.0/4096.0));
 		  V25 = 760;
-		  Avg_Slope = 2500;
+		  Avg_Slope = 2.5;
 		  Temperature = ((Vsense-V25)/Avg_Slope)+25;
 		  ADCOutputConverted = Temperature;
 	  }
@@ -323,18 +327,15 @@ void ADCPollingMethodInit() {
 	ADCChannel[0].Config.Rank = 1;
 	ADCChannel[0].Config.SamplingTime = ADC_SAMPLETIME_3CYCLES;
 
-	ADCChannel[1].Config.Channel = ADC_CHANNEL_1;
+
+	ADCChannel[1].Config.Channel = ADC_CHANNEL_TEMPSENSOR;
 	ADCChannel[1].Config.Rank = 1;
 	ADCChannel[1].Config.SamplingTime = ADC_SAMPLETIME_3CYCLES;
-
-	ADCChannel[2].Config.Channel = ADC_CHANNEL_TEMPSENSOR;
-	ADCChannel[2].Config.Rank = 1;
-	ADCChannel[2].Config.SamplingTime = ADC_SAMPLETIME_3CYCLES;
 }
 //Polling Method
 void ADCPollingMethodUpdate() {
 	//Read all 3 Channel
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 2; i++) {
 		HAL_ADC_ConfigChannel(&hadc1, &ADCChannel[i].Config);
 		HAL_ADC_Start(&hadc1);
 		HAL_ADC_PollForConversion(&hadc1, 10);
